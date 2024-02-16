@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+. "$(dirname -- "$0")/_/husky.sh"
+. scripts/print-horizontal-line
+
+print_horizontal_line
+echo "🚦 Running pre-commit hook..."
+bun run pre-commit

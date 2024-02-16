@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "@rocketseat/eslint-config/next"],
+  "globals": {
+    "JSX": true,
+  },
+  "rules": {
+    "camelcase": "off",
+    "no-unused-expressions": "error",
+  },
+}

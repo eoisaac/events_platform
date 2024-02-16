@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+. scripts/print-horizontal-line
+
+print_horizontal_line
+echo "📝 Running commit-msg hook..."
+npx --no -- commitlint --edit $1
