@@ -1,4 +1,4 @@
-const HomePage = () => {
+const HomePage = async () => {
   return (
     <section className="page dotted-page flex">
       <div className="wrapper">

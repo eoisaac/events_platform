@@ -30,7 +30,7 @@ export const AppHeader = () => {
           />
         </Link>
 
-        <Button size="lg">Sign in</Button>
+        <Button>Sign in</Button>
       </div>
     </header>
   )

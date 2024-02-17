@@ -21,7 +21,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={cn('bg-background', poppins.className)}>{children}</body>
     </html>
   )
