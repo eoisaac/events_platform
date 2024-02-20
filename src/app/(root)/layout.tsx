@@ -1,11 +1,8 @@
+import { LayoutProps } from '@/@types/layout'
 import { AppFooter } from '@/components/app-footer'
 import { AppHeader } from '@/components/app-header'
 
-interface RootLayoutProps {
-  children: React.ReactNode
-}
-
-const RootLayout = ({ children }: Readonly<RootLayoutProps>) => {
+const RootLayout = ({ children }: Readonly<LayoutProps>) => {
   return (
     <div className="relative flex h-screen flex-col">
       <AppHeader />

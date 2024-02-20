@@ -1,4 +1,5 @@
-import { cn } from '@/lib/utils'
+import { LayoutProps } from '@/@types/layout'
+import { cn } from '@/libs/utils'
 import '@/styles/globals.css'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
@@ -15,13 +16,9 @@ export const metadata: Metadata = {
   icons: { icon: '/assets/favicon.ico' },
 }
 
-interface RootLayoutProps {
-  children: React.ReactNode
-}
-
-export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
+export default function RootLayout({ children }: Readonly<LayoutProps>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="">
       <body className={cn('bg-background', poppins.className)}>{children}</body>
     </html>
   )
