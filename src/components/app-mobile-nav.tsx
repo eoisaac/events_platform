@@ -1,3 +1,5 @@
+'use client'
+
 import { AppNav } from '@/components/app-nav'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -9,11 +11,17 @@ import {
 } from '@/components/ui/sheet'
 import { AlignRightIcon, XIcon } from 'lucide-react'
 import Image from 'next/image'
+import React from 'react'
 
 export const AppMobileNav = () => {
+  const [isOpened, setIsOpened] = React.useState(false)
+
+  const handleOpenChange = (open: boolean) => setIsOpened(open)
+  const handleClose = () => setIsOpened(false)
+
   return (
     <nav className="md:hidden">
-      <Sheet>
+      <Sheet open={isOpened} onOpenChange={handleOpenChange}>
         <SheetTrigger className="align-middle">
           <AlignRightIcon className="text-muted-foreground" />
         </SheetTrigger>
@@ -34,7 +42,7 @@ export const AppMobileNav = () => {
           </div>
           <Separator className="border border-gray-50" />
 
-          <AppNav />
+          <AppNav onLinkClick={handleClose} />
         </SheetContent>
       </Sheet>
     </nav>

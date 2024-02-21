@@ -5,8 +5,14 @@ import { cn } from '@/libs/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-export const AppNav = () => {
+interface AppNavProps {
+  onLinkClick?: () => void
+}
+
+export const AppNav = ({ onLinkClick }: AppNavProps) => {
   const pathname = usePathname()
+
+  const handleLinkClick = () => onLinkClick?.()
 
   return (
     <ul className="flex w-full flex-col items-start gap-5 md:flex-row md:justify-between">
@@ -19,7 +25,9 @@ export const AppNav = () => {
               'text-primary': isActive,
             })}
           >
-            <Link href={link.path}>{link.label}</Link>
+            <Link href={link.path} onClick={handleLinkClick}>
+              {link.label}
+            </Link>
           </li>
         )
       })}
