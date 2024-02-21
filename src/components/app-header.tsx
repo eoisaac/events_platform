@@ -1,5 +1,7 @@
 'use client'
 
+import { AppMobileNav } from '@/components/app-mobile-nav'
+import { AppNav } from '@/components/app-nav'
 import { Button } from '@/components/ui/button'
 import { UserMenu } from '@/components/user-menu'
 import { cn } from '@/libs/utils'
@@ -36,13 +38,24 @@ export const AppHeader = ({ user }: AppHeaderProps) => {
           />
         </Link>
 
-        {user ? (
-          <UserMenu user={user} />
-        ) : (
-          <Button asChild>
-            <Link href="auth/sign-in">Sign in</Link>
-          </Button>
+        {user && (
+          <nav className="hidden max-w-xs flex-1 md:flex">
+            <AppNav />
+          </nav>
         )}
+
+        <div className="flex w-32 justify-end gap-3">
+          {user ? (
+            <div className="flex-center inline-flex gap-6">
+              <UserMenu user={user} />
+              <AppMobileNav />
+            </div>
+          ) : (
+            <Button asChild>
+              <Link href="auth/sign-in">Sign in</Link>
+            </Button>
+          )}
+        </div>
       </div>
     </header>
   )

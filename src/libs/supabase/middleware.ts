@@ -3,9 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 export const middleware = async (request: NextRequest) => {
   let response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
+    request: { headers: request.headers },
   })
 
   const supabase = createServerClient(
@@ -35,7 +33,6 @@ export const middleware = async (request: NextRequest) => {
   )
 
   await supabase.auth.getUser()
-
   return response
 }
 
