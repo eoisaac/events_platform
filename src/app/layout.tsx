@@ -1,4 +1,5 @@
 import { LayoutProps } from '@/@types/layout'
+import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/libs/utils'
 import '@/styles/globals.css'
 import type { Metadata } from 'next'
@@ -19,7 +20,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<LayoutProps>) {
   return (
     <html lang="en" className="">
-      <body className={cn('bg-background', poppins.className)}>{children}</body>
+      <body className={cn('bg-background', poppins.className)}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   )
 }

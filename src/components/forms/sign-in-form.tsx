@@ -9,12 +9,13 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { signIn } from '@/libs/supabase/actions/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from '../ui/button'
 
-const formSchema = z.object({
+export const signInFormSchema = z.object({
   email: z.string().email({
     message: 'Please enter a valid email address',
   }),
@@ -23,16 +24,16 @@ const formSchema = z.object({
   }),
 })
 
-type FormValues = z.infer<typeof formSchema>
+export type SignInFormValues = z.infer<typeof signInFormSchema>
 
 export const SignInForm = () => {
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SignInFormValues>({
+    resolver: zodResolver(signInFormSchema),
     defaultValues: { email: '', password: '' },
   })
 
-  const handleSubmit = (values: FormValues) => {
-    console.log(values)
+  const handleSubmit = async (values: SignInFormValues) => {
+    await signIn(values)
   }
 
   return (

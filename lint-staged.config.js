@@ -13,14 +13,6 @@ const scapeFileNames = (filenames) => {
 
 module.exports = {
   './src/**/*.{ts,tsx}': (filenames) => {
-    // const escapedFileNames = filenames
-    // this will wrap all "[" "]" square brackets with another square brackets ([ => [[]) so [...customer].tsx will be processed to [[]...customer[]].tsx
-    // .map(
-    //   (filename) =>
-    //     `"${isWin ? filename.replace(/\[|\]/g, '[$&]') : escape([filename])}"`,
-    // )
-    // .join(' ')
-
     const scapedFilenames = scapeFileNames(filenames).join(' ')
     return [
       `prettier --with-node-modules --ignore-path='./.gitignore' --write ${scapedFilenames}`,

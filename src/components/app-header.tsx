@@ -1,12 +1,18 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { UserMenu } from '@/components/user-menu'
 import { cn } from '@/libs/utils'
+import { User } from '@supabase/supabase-js'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-export const AppHeader = () => {
+interface AppHeaderProps {
+  user: User | null
+}
+
+export const AppHeader = ({ user }: AppHeaderProps) => {
   const [isScrolling, setIsScrolling] = React.useState(false)
 
   React.useEffect(() => {
@@ -30,7 +36,13 @@ export const AppHeader = () => {
           />
         </Link>
 
-        <Button>Sign in</Button>
+        {user ? (
+          <UserMenu user={user} />
+        ) : (
+          <Button asChild>
+            <Link href="auth/sign-in">Sign in</Link>
+          </Button>
+        )}
       </div>
     </header>
   )
