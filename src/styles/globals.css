@@ -79,4 +79,8 @@ body {
   .dotted-page {
     @apply bg-background bg-dotted-pattern bg-contain;
   }
+
+  .input-number {
+    @apply [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none;
+  }
 }

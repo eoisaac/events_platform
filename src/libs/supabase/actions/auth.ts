@@ -1,7 +1,7 @@
 'use server'
 
-import { SignInFormValues } from '@/components/forms/sign-in-form'
-import { SignUpFormValues } from '@/components/forms/sign-up-form'
+import { SignInFormValues } from '@/components/forms/validation/sign-in-form-validation'
+import { SignUpFormValues } from '@/components/forms/validation/sign-up-form-validation'
 import { createClient } from '@/libs/supabase/server'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'

@@ -17,7 +17,7 @@ export const AppMobileNav = () => {
   const [isOpened, setIsOpened] = React.useState(false)
 
   const handleOpenChange = (open: boolean) => setIsOpened(open)
-  const handleClose = () => setIsOpened(false)
+  const handleClose = () => handleOpenChange(false)
 
   return (
     <nav className="md:hidden">

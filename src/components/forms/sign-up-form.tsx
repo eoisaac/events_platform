@@ -1,6 +1,11 @@
 'use client'
 
 import {
+  SignUpFormValues,
+  signUpFormSchema,
+} from '@/components/forms/validation/sign-up-form-validation'
+import { Button } from '@/components/ui/button'
+import {
   Form,
   FormControl,
   FormField,
@@ -12,27 +17,6 @@ import { Input } from '@/components/ui/input'
 import { signUp } from '@/libs/supabase/actions/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { Button } from '../ui/button'
-
-export const signUpFormSchema = z
-  .object({
-    email: z.string().email({
-      message: 'Please enter a valid email address',
-    }),
-    password: z.string().min(8, {
-      message: 'Password must be at least 8 characters long',
-    }),
-    confirmPassword: z.string().min(8, {
-      message: 'Password must be at least 8 characters long',
-    }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
-  })
-
-export type SignUpFormValues = z.infer<typeof signUpFormSchema>
 
 export const SignUpForm = () => {
   const form = useForm<SignUpFormValues>({
@@ -58,7 +42,6 @@ export const SignUpForm = () => {
                   placeholder="example@evently.com"
                   {...field}
                   type="email"
-                  className="input-field"
                 />
               </FormControl>
               <FormMessage />
@@ -72,12 +55,7 @@ export const SignUpForm = () => {
             <FormItem className="w-full">
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Password"
-                  {...field}
-                  type="password"
-                  className="input-field"
-                />
+                <Input placeholder="Password" {...field} type="password" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -94,7 +72,6 @@ export const SignUpForm = () => {
                   placeholder="Confirm Password"
                   {...field}
                   type="password"
-                  className="input-field"
                 />
               </FormControl>
               <FormMessage />

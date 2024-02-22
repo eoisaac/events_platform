@@ -1,6 +1,11 @@
 'use client'
 
 import {
+  SignInFormValues,
+  signInFormSchema,
+} from '@/components/forms/validation/sign-in-form-validation'
+import { Button } from '@/components/ui/button'
+import {
   Form,
   FormControl,
   FormField,
@@ -12,19 +17,6 @@ import { Input } from '@/components/ui/input'
 import { signIn } from '@/libs/supabase/actions/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { Button } from '../ui/button'
-
-export const signInFormSchema = z.object({
-  email: z.string().email({
-    message: 'Please enter a valid email address',
-  }),
-  password: z.string().min(8, {
-    message: 'Password must be at least 8 characters long',
-  }),
-})
-
-export type SignInFormValues = z.infer<typeof signInFormSchema>
 
 export const SignInForm = () => {
   const form = useForm<SignInFormValues>({
@@ -51,7 +43,6 @@ export const SignInForm = () => {
                   placeholder="example@evently.com"
                   {...field}
                   type="email"
-                  className="input-field"
                 />
               </FormControl>
               <FormMessage />
@@ -65,12 +56,7 @@ export const SignInForm = () => {
             <FormItem className="w-full">
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Password"
-                  {...field}
-                  type="password"
-                  className="input-field"
-                />
+                <Input placeholder="Password" {...field} type="password" />
               </FormControl>
               <FormMessage />
             </FormItem>
