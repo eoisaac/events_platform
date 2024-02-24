@@ -7,6 +7,7 @@ import {
   eventFormSchema,
 } from '@/components/forms/validation/event-form-validation'
 import { DateRangePicker } from '@/components/shared/date-range-picker'
+import { ImageUploaderDropzone } from '@/components/shared/image-uploader-dropzone'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -18,8 +19,9 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/libs/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { DollarSignIcon, FileUpIcon, LinkIcon, MapPinIcon } from 'lucide-react'
+import { DollarSignIcon, LinkIcon, MapPinIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 
 interface EventFormProps {
@@ -33,6 +35,8 @@ export const EventForm = (props: EventFormProps) => {
   })
   const { formState } = form
   const formAction = props.type === 'CREATE' ? 'Create' : 'Update'
+
+  const isFreeEvent = form.watch('isFree')
 
   const handleSubmit = async (values: EventFormValues) => {
     console.log(values)
@@ -92,21 +96,21 @@ export const EventForm = (props: EventFormProps) => {
             )}
           />
 
-          <div className="grid w-full place-items-center rounded-md border border-input bg-background">
-            <FileUpIcon className="h-12 w-12 text-border" />
-            <FormField
-              control={form.control}
-              name="imageUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input placeholder="Image URL" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormControl>
+                  <ImageUploaderDropzone
+                    onImageChange={field.onChange}
+                    imageSrc={field.value}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
         <div className="flex flex-col gap-5 md:flex-row">
@@ -156,7 +160,10 @@ export const EventForm = (props: EventFormProps) => {
                       <Input
                         type="number"
                         placeholder="Price"
-                        className="input-number pl-9"
+                        className={cn('input-number pl-9', {
+                          'text-muted-foreground line-through': isFreeEvent,
+                        })}
+                        disabled={isFreeEvent}
                         {...field}
                       />
                       <DollarSignIcon className="absolute left-3 h-5 w-5 text-muted-foreground" />
