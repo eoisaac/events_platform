@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { TestCreate } from '@/test-create'
 import { ChevronDownIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -42,7 +43,9 @@ const HomePage = async () => {
           <div>Thousands of Events</div>
         </h2>
 
-        <div className="flex w-full flex-col gap-5 md:flex-row"></div>
+        <div className="flex w-full flex-col gap-5 md:flex-row">
+          <TestCreate />
+        </div>
       </section>
     </>
   )

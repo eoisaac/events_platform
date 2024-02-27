@@ -14,7 +14,6 @@ export const uploadEventImage = async (image: File) => {
     throw new Error('Error uploading image')
   }
 
-  console.log('Image uploaded:', data.path)
   return data.path
 }
 
