@@ -19,13 +19,20 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { createEvent } from '@/libs/supabase/actions/database/events'
+import {
+  getEventImageUrl,
+  uploadEventImage,
+} from '@/libs/supabase/actions/storage'
 import { cn } from '@/libs/utils'
+import { getFileFromUrl } from '@/utils/file'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { DollarSignIcon, LinkIcon, MapPinIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 
 interface EventFormProps {
   type: 'CREATE' | 'UPDATE'
+  userId: string
 }
 
 export const EventForm = (props: EventFormProps) => {
@@ -38,8 +45,37 @@ export const EventForm = (props: EventFormProps) => {
 
   const isFreeEvent = form.watch('isFree')
 
+  const handleCreateEvent = async (values: EventFormValues) => {
+    const imageFile = await getFileFromUrl(values.imageUrl)
+    const filePath = await uploadEventImage(imageFile)
+    const fileUrl = getEventImageUrl(filePath)
+
+    const { error } = await createEvent({
+      category_id: values.categoryId,
+      is_free: values.isFree,
+      end_date: values.dateRange.to.toISOString(),
+      start_date: values.dateRange.from.toISOString(),
+      name: values.name,
+      price: values.price,
+      location: values.location,
+      description: values.description,
+      url: values.url,
+      user_id: props.userId,
+      image_url: fileUrl,
+    })
+
+    form.reset()
+    console.error('Error creating event:', error)
+  }
+
+  const handleUpdateEvent = async (values: EventFormValues) => {
+    console.log('Not implemented, values:', values)
+  }
+
   const handleSubmit = async (values: EventFormValues) => {
-    console.log(values)
+    const actions = { CREATE: handleCreateEvent, UPDATE: handleUpdateEvent }
+    const action = actions[props.type]
+    await action(values)
   }
 
   return (
