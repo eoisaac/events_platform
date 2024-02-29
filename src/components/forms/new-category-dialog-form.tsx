@@ -23,11 +23,17 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { createCategory } from '@/libs/supabase/actions/database/categories'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
-export const NewCategoryDialogForm = () => {
+interface NewCategoryDialogFormProps {
+  onCategoryCreated: () => void
+}
+
+export const NewCategoryDialogForm = (props: NewCategoryDialogFormProps) => {
   const [isOpened, setIsOpened] = React.useState(false)
 
   const form = useForm<NewCategoryFormValues>({
@@ -38,9 +44,15 @@ export const NewCategoryDialogForm = () => {
 
   const handleOpenChange = (open: boolean) => setIsOpened(open)
 
-  const handleSubmit = (values: NewCategoryFormValues) => {
-    console.log(values)
+  const handleSubmit = async (values: NewCategoryFormValues) => {
+    const { error } = await createCategory(values)
+
+    if (error)
+      return form.setError('name', { type: 'manual', message: error.message })
+
     form.reset()
+    toast.success('Category created')
+    props.onCategoryCreated()
     handleOpenChange(false)
   }
 

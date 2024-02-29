@@ -1,3 +1,5 @@
+import { Tables } from '@/@types/supabase'
+import { NewCategoryDialogForm } from '@/components/forms/new-category-dialog-form'
 import {
   Select,
   SelectContent,
@@ -7,7 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { NewCategoryDialogForm } from './forms/new-category-dialog-form'
+import { getCategories } from '@/libs/supabase/actions/database/categories'
+import React from 'react'
 
 interface EventCategorySelectProps {
   value?: string
@@ -15,7 +18,17 @@ interface EventCategorySelectProps {
 }
 
 export const EventCategorySelect = (props: EventCategorySelectProps) => {
-  // TODO: get categories from database
+  const [categories, setCategories] = React.useState<Tables<'categories'>[]>([])
+
+  const handleGetCategories = async () => {
+    const { data } = await getCategories()
+    setCategories(data || [])
+  }
+
+  React.useEffect(() => {
+    handleGetCategories()
+  }, [])
+
   return (
     <Select onValueChange={props.onChange} defaultValue={props.value}>
       <SelectTrigger>
@@ -25,13 +38,14 @@ export const EventCategorySelect = (props: EventCategorySelectProps) => {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Categories</SelectLabel>
-          <SelectItem value="ai">AI</SelectItem>
-          <SelectItem value="frontend">Frontend</SelectItem>
-          <SelectItem value="reactjs">ReactJS</SelectItem>
-          <SelectItem value="nextjs">NextJS</SelectItem>
+          {categories.map((category) => (
+            <SelectItem key={category.id} value={category.id}>
+              {category.name}
+            </SelectItem>
+          ))}
         </SelectGroup>
         <SelectGroup className="mt-4">
-          <NewCategoryDialogForm />
+          <NewCategoryDialogForm onCategoryCreated={handleGetCategories} />
         </SelectGroup>
       </SelectContent>
     </Select>

@@ -19,7 +19,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { createCategory } from '@/libs/supabase/actions/database'
 import { cn } from '@/libs/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { DollarSignIcon, LinkIcon, MapPinIcon } from 'lucide-react'
@@ -41,8 +40,6 @@ export const EventForm = (props: EventFormProps) => {
 
   const handleSubmit = async (values: EventFormValues) => {
     console.log(values)
-
-    await createCategory()
   }
 
   return (
