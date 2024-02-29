@@ -50,6 +50,7 @@ export const EventForm = (props: EventFormProps) => {
     const filePath = await uploadEventImage(imageFile)
     const fileUrl = getEventImageUrl(filePath)
 
+    // TODO: improve error handling and user feedback(toast and form error messages)
     const { error } = await createEvent({
       category_id: values.categoryId,
       is_free: values.isFree,
