@@ -9,7 +9,7 @@ export const eventFormSchema = z.object({
   location: z.string().min(3, 'Location must be at least 3 characters'),
   price: z.coerce.number(),
   isFree: z.boolean(),
-  url: z.string().url(),
+  url: z.coerce.string().url().nullable(),
   dateRange: z.object(
     { from: z.coerce.date(), to: z.coerce.date() },
     { required_error: 'You must select a date range' },

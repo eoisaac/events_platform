@@ -35,8 +35,8 @@ export type Database = {
           category_id: string
           created_at: string
           created_by: string
-          description: string | null
-          end_date: string | null
+          description: string
+          end_date: string
           id: string
           image_url: string
           is_free: boolean
@@ -51,8 +51,8 @@ export type Database = {
           category_id: string
           created_at?: string
           created_by: string
-          description?: string | null
-          end_date?: string | null
+          description: string
+          end_date: string
           id?: string
           image_url: string
           is_free?: boolean
@@ -67,8 +67,8 @@ export type Database = {
           category_id?: string
           created_at?: string
           created_by?: string
-          description?: string | null
-          end_date?: string | null
+          description?: string
+          end_date?: string
           id?: string
           image_url?: string
           is_free?: boolean

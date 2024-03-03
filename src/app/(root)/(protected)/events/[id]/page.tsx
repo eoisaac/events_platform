@@ -1,15 +1,16 @@
 import { Badge } from '@/components/ui/badge'
-import { getEvent } from '@/libs/supabase/actions/database/events'
-import Image from 'next/image'
-
 import { Button } from '@/components/ui/button'
+import { getEvent } from '@/libs/supabase/actions/database/events'
 import { format } from 'date-fns'
 import { CalendarRangeIcon, LinkIcon, MapPinIcon } from 'lucide-react'
+import Image from 'next/image'
 
-const EventPage = async () => {
-  const eventId = 'a3936bfa-9505-4e2f-a75c-2b9afd1d5fbc'
-  const { data: event } = await getEvent(eventId)
+interface EventPageProps {
+  params: { id: string }
+}
 
+const EventPage = async ({ params: { id } }: EventPageProps) => {
+  const { data: event } = await getEvent(id)
   if (!event) return null
 
   return (
@@ -20,7 +21,7 @@ const EventPage = async () => {
           alt={`${event.name} image`}
           width={1000}
           height={1000}
-          className="h-full rounded-md object-cover object-center"
+          className="h-full rounded-md object-cover object-center shadow-md"
         />
 
         <div className="flex flex-1 flex-col gap-4 md:mt-12">

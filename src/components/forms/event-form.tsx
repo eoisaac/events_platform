@@ -1,5 +1,6 @@
 'use client'
 
+import { Tables } from '@/@types/supabase'
 import { EventCategorySelect } from '@/components/event-category-select'
 import {
   EventFormValues,
@@ -26,6 +27,10 @@ import {
 } from '@/libs/supabase/actions/storage'
 import { cn } from '@/libs/utils'
 import { getFileFromUrl } from '@/utils/file'
+import {
+  mapEventSchemaToFormSchema,
+  mapFormSchemaToEventSchema,
+} from '@/utils/mappers'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { DollarSignIcon, LinkIcon, MapPinIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
@@ -33,16 +38,20 @@ import { useForm } from 'react-hook-form'
 interface EventFormProps {
   type: 'CREATE' | 'UPDATE'
   userId: string
+  event?: Tables<'events'>
 }
 
 export const EventForm = (props: EventFormProps) => {
+  const isCreate = props.type === 'CREATE'
+  const formAction = isCreate ? 'Create' : 'Update'
+
   const form = useForm<EventFormValues>({
     resolver: zodResolver(eventFormSchema),
-    defaultValues: eventFormDefaultValues,
+    defaultValues: isCreate
+      ? eventFormDefaultValues
+      : mapEventSchemaToFormSchema(props.event!),
   })
   const { formState } = form
-  const formAction = props.type === 'CREATE' ? 'Create' : 'Update'
-
   const isFreeEvent = form.watch('isFree')
 
   const handleCreateEvent = async (values: EventFormValues) => {
@@ -51,19 +60,12 @@ export const EventForm = (props: EventFormProps) => {
     const fileUrl = getEventImageUrl(filePath)
 
     // TODO: improve error handling and user feedback(toast and form error messages)
-    const { error } = await createEvent({
-      category_id: values.categoryId,
-      is_free: values.isFree,
-      end_date: values.dateRange.to.toISOString(),
-      start_date: values.dateRange.from.toISOString(),
-      name: values.name,
-      price: values.price,
-      location: values.location,
-      description: values.description,
-      url: values.url,
-      created_by: props.userId,
-      image_url: fileUrl,
-    })
+    const mapped = mapFormSchemaToEventSchema(
+      { ...values, imageUrl: fileUrl },
+      props.userId,
+    )
+
+    const { error } = await createEvent(mapped)
 
     form.reset()
     console.error('Error creating event:', error)
