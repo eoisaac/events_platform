@@ -11,6 +11,11 @@ export const getAllEvents = async () => {
   return await supabase.from('events').select('*')
 }
 
+export const getEvent = async (eventId: string) => {
+  const supabase = createClient()
+  return await supabase.from('events').select().eq('id', eventId).single()
+}
+
 export const getUserEvents = async (userId: string) => {
   const supabase = createClient()
   return await supabase.from('events').select().eq('created_by', userId)

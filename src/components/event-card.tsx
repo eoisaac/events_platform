@@ -10,8 +10,10 @@ import {
 } from '@/components/ui/card'
 import { User } from '@supabase/supabase-js'
 import { format } from 'date-fns'
-import { SquarePenIcon, Trash2Icon } from 'lucide-react'
+import { SquarePenIcon } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { DeleteEventDialog } from './delete-event-dialog'
 
 interface EventCardProps {
   event: Tables<'events'>
@@ -29,20 +31,18 @@ export const EventCard = ({ event, user }: EventCardProps) => {
             <Button variant="ghost" size="icon">
               <SquarePenIcon className="h-5 w-5 text-muted-foreground" />
             </Button>
-            <Button variant="ghost" size="icon">
-              <Trash2Icon className="h-5 w-5 text-destructive" />
-            </Button>
+            <DeleteEventDialog />
           </div>
         )}
 
-        <div className="relative h-44 w-full">
+        <Link href={`/events/${event.id}`} className="relative h-44 w-full">
           <Image
             src={event.image_url}
             alt={`${event.name} image`}
             className="object-cover object-center"
             fill
           />
-        </div>
+        </Link>
 
         <CardHeader className="p-0 px-4">
           <CardDescription className="font-semibold text-primary">
@@ -55,13 +55,20 @@ export const EventCard = ({ event, user }: EventCardProps) => {
             )}
           </CardDescription>
           <div>
-            <CardTitle className="text-xl">{event.name}</CardTitle>
-            <CardDescription className="font-medium">
-              Isaac Santiago
-            </CardDescription>
+            <Link href={`/events/${event.id}`} className="relative h-44 w-full">
+              <CardTitle className="text-xl">{event.name}</CardTitle>
+            </Link>
+
+            <Button
+              variant="link"
+              size="sm"
+              className="h-auto px-0 text-muted-foreground"
+            >
+              Isaac Santiago {/* TODO: replace with event creator name */}
+            </Button>
           </div>
         </CardHeader>
-        <CardFooter className="flex-wrap items-center gap-2  p-0 px-4 pb-4">
+        <CardFooter className="flex-wrap items-center gap-2 p-0 px-4 pb-4">
           <Badge variant="price">
             {event.is_free ? 'FREE' : `$${event.price}`}
           </Badge>

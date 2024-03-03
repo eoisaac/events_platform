@@ -61,7 +61,7 @@ export const NewCategoryDialogForm = (props: NewCategoryDialogFormProps) => {
       <AlertDialogTrigger asChild>
         <Button className="w-full">Add new category</Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="bg-white">
+      <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>New Category</AlertDialogTitle>
           <AlertDialogDescription>
