@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button'
 import { UserMenu } from '@/components/user-menu'
 import { cn } from '@/libs/utils'
 import { User } from '@supabase/supabase-js'
-import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { Logo } from './shared/logo'
 
 interface AppHeaderProps {
   user: User | null
@@ -29,14 +29,7 @@ export const AppHeader = ({ user }: AppHeaderProps) => {
       )}
     >
       <div className="wrapper flex items-center justify-between">
-        <Link href="/" className="w-36">
-          <Image
-            src="/assets/images/logo.svg"
-            alt="Evently logo"
-            width={128}
-            height={38}
-          />
-        </Link>
+        <Logo />
 
         {user && (
           <nav className="hidden max-w-xs flex-1 md:flex">
