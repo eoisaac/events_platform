@@ -14,6 +14,11 @@ export const updateEvent = async (
   return await supabase.from('events').update(data).eq('id', eventId)
 }
 
+export const deleteEvent = async (eventId: string) => {
+  const supabase = createClient()
+  return await supabase.from('events').delete().eq('id', eventId)
+}
+
 export const getAllEvents = async () => {
   const supabase = createClient()
   return await supabase.from('events').select('*')

@@ -1,6 +1,8 @@
+import { EventMenu } from '@/components/event-menu'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { getEvent } from '@/libs/supabase/actions/database/events'
+import { createClient } from '@/libs/supabase/server'
 import { format } from 'date-fns'
 import { CalendarRangeIcon, LinkIcon, MapPinIcon } from 'lucide-react'
 import Image from 'next/image'
@@ -13,15 +15,23 @@ const EventPage = async ({ params: { id } }: EventPageProps) => {
   const { data: event } = await getEvent(id)
   if (!event) return null
 
+  const supabase = createClient()
+  const { data: auth } = await supabase.auth.getUser()
+  const displayEventMenu = auth.user?.id === event.created_by
+
   return (
     <section className="page dotted-page flex flex-col">
-      <div className="wrapper grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
+      <div className="wrapper relative grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
+        {displayEventMenu && (
+          <EventMenu eventId={event.id} className="opacity-100" />
+        )}
+
         <Image
           src={event.image_url}
           alt={`${event.name} image`}
           width={1000}
           height={1000}
-          className="h-full rounded-md object-cover object-center shadow-md"
+          className="z-10 h-full rounded-md object-cover object-center shadow-md"
         />
 
         <div className="flex flex-1 flex-col gap-4 md:mt-12">

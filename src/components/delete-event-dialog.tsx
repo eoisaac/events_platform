@@ -12,15 +12,19 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import { deleteEvent } from '@/libs/supabase/actions/database/events'
 import { Trash2Icon } from 'lucide-react'
 import React from 'react'
 
-// interface DeleteEventDialogProps {}
+interface DeleteEventDialogProps {
+  eventId: string
+}
 
-export const DeleteEventDialog = () => {
+export const DeleteEventDialog = (props: DeleteEventDialogProps) => {
   const [isOpened, setIsOpened] = React.useState(false)
 
   const handleOpenChange = (open: boolean) => setIsOpened(open)
+  const handleDelete = async () => await deleteEvent(props.eventId)
 
   return (
     <AlertDialog open={isOpened} onOpenChange={handleOpenChange}>
@@ -41,9 +45,7 @@ export const DeleteEventDialog = () => {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <Button variant="destructive" asChild>
-            <AlertDialogAction onClick={() => console.log('fgdasgsd')}>
-              Delete
-            </AlertDialogAction>
+            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

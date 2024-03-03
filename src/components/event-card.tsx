@@ -10,10 +10,9 @@ import {
 } from '@/components/ui/card'
 import { User } from '@supabase/supabase-js'
 import { format } from 'date-fns'
-import { SquarePenIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { DeleteEventDialog } from './delete-event-dialog'
+import { EventMenu } from './event-menu'
 
 interface EventCardProps {
   event: Tables<'events'>
@@ -26,16 +25,7 @@ export const EventCard = ({ event, user }: EventCardProps) => {
   return (
     <li className="group h-min w-full sm:max-w-xs">
       <Card className="relative flex min-h-80 w-full flex-col justify-between overflow-hidden p-0">
-        {displayEditorMenu && (
-          <div className="absolute right-4 top-4 z-20 flex flex-col rounded-sm bg-card opacity-0 transition-all duration-200 group-hover:opacity-100">
-            <Button variant="ghost" size="icon" asChild>
-              <Link href={`/events/${event.id}/update`}>
-                <SquarePenIcon className="h-5 w-5 text-muted-foreground" />
-              </Link>
-            </Button>
-            <DeleteEventDialog />
-          </div>
-        )}
+        {displayEditorMenu && <EventMenu eventId={event.id} />}
 
         <Link href={`/events/${event.id}`} className="relative h-44 w-full">
           <Image

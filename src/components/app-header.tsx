@@ -2,13 +2,13 @@
 
 import { AppMobileNav } from '@/components/app-mobile-nav'
 import { AppNav } from '@/components/app-nav'
+import { Logo } from '@/components/shared/logo'
 import { Button } from '@/components/ui/button'
 import { UserMenu } from '@/components/user-menu'
 import { cn } from '@/libs/utils'
 import { User } from '@supabase/supabase-js'
 import Link from 'next/link'
 import React from 'react'
-import { Logo } from '@/components/shared/logo'
 
 interface AppHeaderProps {
   user: User | null
@@ -24,7 +24,7 @@ export const AppHeader = ({ user }: AppHeaderProps) => {
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 h-16 border-b border-b-transparent transition-all duration-100 ease-in-out',
+        'fixed inset-x-0 top-0 z-50 h-16 border-b border-b-transparent transition-all duration-100 ease-in-out',
         { 'border-b-border bg-background shadow-sm': isScrolling },
       )}
     >

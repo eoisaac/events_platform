@@ -260,7 +260,13 @@ export const EventForm = (props: EventFormProps) => {
               <FormItem className="w-full">
                 <FormControl>
                   <div className="relative flex w-full items-center">
-                    <Input placeholder="URL" className="pl-9" {...field} />
+                    <Input
+                      placeholder="URL"
+                      className="pl-9"
+                      value={field.value || ''}
+                      onChange={field.onChange}
+                    />
+
                     <LinkIcon className="absolute left-3 h-5 w-5 text-muted-foreground" />
                   </div>
                 </FormControl>
