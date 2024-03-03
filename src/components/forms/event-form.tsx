@@ -20,7 +20,10 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { createEvent } from '@/libs/supabase/actions/database/events'
+import {
+  createEvent,
+  updateEvent,
+} from '@/libs/supabase/actions/database/events'
 import {
   getEventImageUrl,
   uploadEventImage,
@@ -33,15 +36,18 @@ import {
 } from '@/utils/mappers'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { DollarSignIcon, LinkIcon, MapPinIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
 interface EventFormProps {
   type: 'CREATE' | 'UPDATE'
   userId: string
-  event?: Tables<'events'>
+  event?: Tables<'events'> | null
 }
 
 export const EventForm = (props: EventFormProps) => {
+  const router = useRouter()
+
   const isCreate = props.type === 'CREATE'
   const formAction = isCreate ? 'Create' : 'Update'
 
@@ -66,13 +72,23 @@ export const EventForm = (props: EventFormProps) => {
     )
 
     const { error } = await createEvent(mapped)
+    if (error) return console.error('Error creating event:', error)
 
     form.reset()
-    console.error('Error creating event:', error)
   }
 
   const handleUpdateEvent = async (values: EventFormValues) => {
-    console.log('Not implemented, values:', values)
+    console.log('values', values)
+    const mapped = mapFormSchemaToEventSchema(values, props.userId)
+    console.log('mapped', mapped)
+
+    if (!props.event) return router.replace('/')
+
+    const { error } = await updateEvent(props.event.id!, mapped)
+    if (error) return console.error('Error updating event:', error)
+
+    form.reset()
+    router.replace(`/events/${props.event.id}`)
   }
 
   const handleSubmit = async (values: EventFormValues) => {

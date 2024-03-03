@@ -28,8 +28,10 @@ export const EventCard = ({ event, user }: EventCardProps) => {
       <Card className="relative flex min-h-80 w-full flex-col justify-between overflow-hidden p-0">
         {displayEditorMenu && (
           <div className="absolute right-4 top-4 z-20 flex flex-col rounded-sm bg-card opacity-0 transition-all duration-200 group-hover:opacity-100">
-            <Button variant="ghost" size="icon">
-              <SquarePenIcon className="h-5 w-5 text-muted-foreground" />
+            <Button variant="ghost" size="icon" asChild>
+              <Link href={`/events/${event.id}/update`}>
+                <SquarePenIcon className="h-5 w-5 text-muted-foreground" />
+              </Link>
             </Button>
             <DeleteEventDialog />
           </div>

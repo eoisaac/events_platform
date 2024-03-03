@@ -17,6 +17,7 @@ export const mapFormSchemaToEventSchema = (
   image_url: schema.imageUrl,
   created_by: userId,
 })
+
 export const mapEventSchemaToFormSchema = (
   schema: Tables<'events'>,
 ): EventFormValues => ({

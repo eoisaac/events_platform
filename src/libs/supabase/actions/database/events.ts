@@ -6,6 +6,14 @@ export const createEvent = async (data: TablesInsert<'events'>) => {
   return await supabase.from('events').insert([data])
 }
 
+export const updateEvent = async (
+  eventId: string,
+  data: TablesInsert<'events'>,
+) => {
+  const supabase = createClient()
+  return await supabase.from('events').update(data).eq('id', eventId)
+}
+
 export const getAllEvents = async () => {
   const supabase = createClient()
   return await supabase.from('events').select('*')
