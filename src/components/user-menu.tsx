@@ -18,7 +18,14 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { createClient } from '@/libs/supabase/client'
 import { User } from '@supabase/supabase-js'
-import { LogOutIcon, MoonIcon, SunIcon, UserRoundIcon } from 'lucide-react'
+import {
+  LaptopIcon,
+  LogOutIcon,
+  MoonIcon,
+  SunIcon,
+  UserRoundIcon,
+} from 'lucide-react'
+import { useTheme } from 'next-themes'
 import { useRouter } from 'next/navigation'
 
 interface UserMenuProps {
@@ -28,6 +35,9 @@ interface UserMenuProps {
 export const UserMenu = ({ user }: UserMenuProps) => {
   const supabase = createClient()
   const router = useRouter()
+
+  const { theme, setTheme } = useTheme()
+  const handleSetTheme = (theme: string) => setTheme(theme)
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
@@ -73,7 +83,10 @@ export const UserMenu = ({ user }: UserMenuProps) => {
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent className="mx-1">
-              <DropdownMenuRadioGroup value="light">
+              <DropdownMenuRadioGroup
+                value={theme}
+                onValueChange={handleSetTheme}
+              >
                 <DropdownMenuRadioItem
                   value="light"
                   indicatorClassName="text-primary"
@@ -90,6 +103,15 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                   <span>Dark</span>
                   <DropdownMenuShortcut>
                     <MoonIcon className="h-4 w-4 text-muted-foreground" />
+                  </DropdownMenuShortcut>
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem
+                  value="system"
+                  indicatorClassName="text-primary"
+                >
+                  <span>System</span>
+                  <DropdownMenuShortcut>
+                    <LaptopIcon className="h-4 w-4 text-muted-foreground" />
                   </DropdownMenuShortcut>
                 </DropdownMenuRadioItem>
               </DropdownMenuRadioGroup>

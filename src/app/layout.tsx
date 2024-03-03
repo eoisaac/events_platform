@@ -1,6 +1,7 @@
 import { LayoutProps } from '@/@types/layout'
 import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/libs/utils'
+import { ThemeProvider } from '@/providers/theme-provider'
 import '@/styles/globals.css'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
@@ -21,8 +22,15 @@ export default function RootLayout({ children }: Readonly<LayoutProps>) {
   return (
     <html lang="en" className="">
       <body className={cn('bg-background', poppins.className)}>
-        {children}
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   )
