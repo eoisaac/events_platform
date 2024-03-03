@@ -14,6 +14,7 @@ import React from 'react'
 
 interface EventCategorySelectProps {
   value?: string
+  enableCreate?: boolean
   onChange: (value: string) => void
 }
 
@@ -44,9 +45,11 @@ export const EventCategorySelect = (props: EventCategorySelectProps) => {
             </SelectItem>
           ))}
         </SelectGroup>
-        <SelectGroup className="mt-4">
-          <NewCategoryDialogForm onCategoryCreated={handleGetCategories} />
-        </SelectGroup>
+        {props.enableCreate && (
+          <SelectGroup className="mt-4">
+            <NewCategoryDialogForm onCategoryCreated={handleGetCategories} />
+          </SelectGroup>
+        )}
       </SelectContent>
     </Select>
   )

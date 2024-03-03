@@ -1,4 +1,4 @@
-import { Logo } from './shared/logo'
+import { Logo } from '@/components/shared/logo'
 
 export const AppFooter = () => {
   const currentYear = new Date().getFullYear()

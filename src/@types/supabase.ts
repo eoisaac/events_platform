@@ -32,8 +32,9 @@ export type Database = {
       }
       events: {
         Row: {
-          category_id: string | null
+          category_id: string
           created_at: string
+          created_by: string
           description: string | null
           end_date: string | null
           id: string
@@ -42,14 +43,14 @@ export type Database = {
           location: string
           name: string
           price: number
-          start_date: string | null
-          updated_at: string | null
+          start_date: string
+          updated_at: string
           url: string | null
-          user_id: string | null
         }
         Insert: {
-          category_id?: string | null
+          category_id: string
           created_at?: string
+          created_by: string
           description?: string | null
           end_date?: string | null
           id?: string
@@ -58,14 +59,14 @@ export type Database = {
           location: string
           name: string
           price: number
-          start_date?: string | null
-          updated_at?: string | null
+          start_date: string
+          updated_at?: string
           url?: string | null
-          user_id?: string | null
         }
         Update: {
-          category_id?: string | null
+          category_id?: string
           created_at?: string
+          created_by?: string
           description?: string | null
           end_date?: string | null
           id?: string
@@ -74,10 +75,9 @@ export type Database = {
           location?: string
           name?: string
           price?: number
-          start_date?: string | null
-          updated_at?: string | null
+          start_date?: string
+          updated_at?: string
           url?: string | null
-          user_id?: string | null
         }
         Relationships: [
           {
@@ -89,7 +89,7 @@ export type Database = {
           },
           {
             foreignKeyName: 'public_events_user_id_fkey'
-            columns: ['user_id']
+            columns: ['created_by']
             isOneToOne: false
             referencedRelation: 'users'
             referencedColumns: ['id']

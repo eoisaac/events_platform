@@ -57,7 +57,7 @@ export const ImageUploaderDropzone = ({
           <Image
             src={imageUrl}
             className="w-full object-cover object-center"
-            alt="Image"
+            alt="Event Image"
             fill
           />
         ) : (

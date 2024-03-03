@@ -1,9 +1,17 @@
+import { EventCard } from '@/components/event-card'
 import { Button } from '@/components/ui/button'
+import { getAllEvents } from '@/libs/supabase/actions/database/events'
+import { createClient } from '@/libs/supabase/server'
 import { ChevronDownIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
 const HomePage = async () => {
+  const supabase = createClient()
+  const { data: auth } = await supabase.auth.getUser()
+
+  const { data: events } = await getAllEvents()
+
   return (
     <>
       <section className="page dotted-page flex">
@@ -42,7 +50,15 @@ const HomePage = async () => {
           <div>Thousands of Events</div>
         </h2>
 
-        <div className="flex w-full flex-col gap-5 md:flex-row"></div>
+        <div className="flex flex-1">
+          {events && (
+            <ul className="grid flex-1 grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-8">
+              {events.map((event) => (
+                <EventCard key={event.id} event={event} user={auth.user} />
+              ))}
+            </ul>
+          )}
+        </div>
       </section>
     </>
   )

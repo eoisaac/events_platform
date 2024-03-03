@@ -8,7 +8,7 @@ import { cn } from '@/libs/utils'
 import { User } from '@supabase/supabase-js'
 import Link from 'next/link'
 import React from 'react'
-import { Logo } from './shared/logo'
+import { Logo } from '@/components/shared/logo'
 
 interface AppHeaderProps {
   user: User | null

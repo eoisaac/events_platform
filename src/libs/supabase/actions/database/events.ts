@@ -8,10 +8,10 @@ export const createEvent = async (data: TablesInsert<'events'>) => {
 
 export const getAllEvents = async () => {
   const supabase = createClient()
-  return await supabase.from('events').select()
+  return await supabase.from('events').select('*')
 }
 
 export const getUserEvents = async (userId: string) => {
   const supabase = createClient()
-  return await supabase.from('events').select().eq('user_id', userId)
+  return await supabase.from('events').select().eq('created_by', userId)
 }

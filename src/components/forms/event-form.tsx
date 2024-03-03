@@ -61,7 +61,7 @@ export const EventForm = (props: EventFormProps) => {
       location: values.location,
       description: values.description,
       url: values.url,
-      user_id: props.userId,
+      created_by: props.userId,
       image_url: fileUrl,
     })
 
@@ -108,6 +108,7 @@ export const EventForm = (props: EventFormProps) => {
                   <EventCategorySelect
                     value={field.value}
                     onChange={field.onChange}
+                    enableCreate
                   />
                 </FormControl>
                 <FormMessage />
