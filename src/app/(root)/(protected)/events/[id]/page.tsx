@@ -38,23 +38,23 @@ const EventPage = async ({ params: { id } }: EventPageProps) => {
           <h3 className="text-3xl font-bold">{event.name}</h3>
 
           <div className="flex flex-wrap items-center gap-3">
-            <Badge variant="price" className="text-md px-3">
+            <Badge variant="price" className="px-3">
               {event.is_free ? 'FREE' : `$${event.price}`}
             </Badge>
-            <Badge variant="secondary" className="text-md px-3">
+            <Badge variant="secondary" className="px-3">
               AI
             </Badge>
 
             <div className="ml-2">
-              <span className="text-sm">by </span>
-              <span className="text-lg font-medium text-muted-foreground">
+              <span className="text-xs">by </span>
+              <span className="font-medium text-muted-foreground">
                 Isaac Santiago {/* TODO: replace with event creator name */}
               </span>
             </div>
           </div>
 
-          <div className="mt-4 inline-flex items-center gap-3">
-            <CalendarRangeIcon className="h-6 w-6 text-tertiary" />
+          <div className="mt-4 inline-flex items-center gap-3 text-sm">
+            <CalendarRangeIcon className="h-5 w-5 text-tertiary" />
 
             <div className="font-medium">
               {format(new Date(event.start_date), 'MMM dd, yyyy')}
@@ -69,8 +69,8 @@ const EventPage = async ({ params: { id } }: EventPageProps) => {
             </div>
           </div>
 
-          <div className="inline-flex items-center gap-3">
-            <MapPinIcon className="h-6 w-6 text-tertiary" />
+          <div className="inline-flex items-center gap-3 text-sm">
+            <MapPinIcon className="h-5 w-5 text-tertiary" />
             <div className="font-medium">{event.location}</div>
           </div>
 

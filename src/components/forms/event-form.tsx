@@ -60,11 +60,14 @@ export const EventForm = (props: EventFormProps) => {
   const { formState } = form
   const isFreeEvent = form.watch('isFree')
 
-  const handleCreateEvent = async (values: EventFormValues) => {
-    const imageFile = await getFileFromUrl(values.imageUrl)
+  const getEventImage = async (url: string) => {
+    const imageFile = await getFileFromUrl(url)
     const filePath = await uploadEventImage(imageFile)
-    const fileUrl = getEventImageUrl(filePath)
+    return getEventImageUrl(filePath)
+  }
 
+  const handleCreateEvent = async (values: EventFormValues) => {
+    const fileUrl = await getEventImage(values.imageUrl)
     // TODO: improve error handling and user feedback(toast and form error messages)
     const mapped = mapFormSchemaToEventSchema(
       { ...values, imageUrl: fileUrl },
@@ -78,11 +81,12 @@ export const EventForm = (props: EventFormProps) => {
   }
 
   const handleUpdateEvent = async (values: EventFormValues) => {
-    console.log('values', values)
     const mapped = mapFormSchemaToEventSchema(values, props.userId)
-    console.log('mapped', mapped)
 
     if (!props.event) return router.replace('/')
+    if (values.imageUrl !== props.event.image_url) {
+      mapped.image_url = await getEventImage(values.imageUrl)
+    }
 
     const { error } = await updateEvent(props.event.id!, mapped)
     if (error) return console.error('Error updating event:', error)

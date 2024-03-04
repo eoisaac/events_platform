@@ -30,7 +30,7 @@ export const DeleteEventDialog = (props: DeleteEventDialogProps) => {
     <AlertDialog open={isOpened} onOpenChange={handleOpenChange}>
       <AlertDialogTrigger asChild>
         <Button variant="ghost" size="icon">
-          <Trash2Icon className="h-5 w-5 text-destructive" />
+          <Trash2Icon className="h-4 w-4 text-destructive" />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

@@ -19,7 +19,7 @@ export const EventMenu = (props: EventMenuProps) => {
     >
       <Button variant="ghost" size="icon" asChild>
         <Link href={`/events/${props.eventId}/update`}>
-          <SquarePenIcon className="h-5 w-5 text-muted-foreground" />
+          <SquarePenIcon className="h-4 w-4 text-muted-foreground" />
         </Link>
       </Button>
       <DeleteEventDialog eventId={props.eventId} />
